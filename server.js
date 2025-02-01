@@ -1,17 +1,19 @@
-import express from "express";
-import connectDB from "./config/db.js";
-import dotenv from "dotenv";
-
-dotenv.config();
+const express = require("express");
+const connectDB = require("./config/db.js");
+require("dotenv").config();
 
 //Connect to database
 connectDB();
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello!");
-});
+//Body Parser
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+//Routes
+
+app.use("/api/travel", require("./routes/travelRoutes.js"));
 
 const PORT = process.env.PORT || 5001;
 

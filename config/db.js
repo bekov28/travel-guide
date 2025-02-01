@@ -1,6 +1,5 @@
-import mongoose from "mongoose";
-
-mongoose.set("strictQuery", false);
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", true);
 
 const connectDB = async () => {
   try {
@@ -12,4 +11,5 @@ const connectDB = async () => {
     console.log(error);
   }
 };
-export default connectDB;
+
+module.exports = connectDB;
