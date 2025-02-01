@@ -9,7 +9,7 @@ const getAllTravels = async (req, res) => {
 
     res.status(200).json({
       message: "success",
-      travels,
+      travels: travels.reverse(),
     });
   } catch (error) {
     res.send(error);
@@ -58,4 +58,47 @@ const addTravelBook = async (req, res) => {
   }
 };
 
-module.exports = { getAllTravels, getTravelById, addTravelBook };
+//Method: PUT
+//Desc:  Edit travel book by its ID
+
+const updateTravelBook = async (req, res) => {
+  try {
+    const { title, image, desc } = req.body;
+
+    const updatedTravel = await Travel.findByIdAndUpdate(req.params.id, {
+      title,
+      image,
+      desc,
+    });
+
+    res.status(200).json({
+      message: "success",
+      updatedTravel,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+//Method: DELETE
+//Desc:  Deleting travel book by ID
+
+const removeTravelBook = async (req, res) => {
+  try {
+    await Travel.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      message: "Deleted",
+    });
+  } catch (error) {
+    res.send(error);
+  }
+};
+
+module.exports = {
+  getAllTravels,
+  getTravelById,
+  addTravelBook,
+  updateTravelBook,
+  removeTravelBook,
+};
